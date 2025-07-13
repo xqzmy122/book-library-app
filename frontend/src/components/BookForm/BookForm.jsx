@@ -3,12 +3,21 @@ import "./BookForm.css";
 import { useDispatch } from "react-redux";
 import {nanoid} from 'nanoid'
 import { addBook } from "../../redux/books/actionCreators";
+import booksData from '../../data/books.json'
 
 function BookForm() {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
 
   const dispatch = useDispatch();
+
+  function handleRandomBook() {
+    const randomId = Math.floor(Math.random() * booksData.length)
+    const randomBook = booksData[randomId]
+    const randomBookWithId = {...randomBook, id: nanoid()}
+
+    dispatch(addBook(randomBookWithId))
+  }
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -49,6 +58,7 @@ function BookForm() {
           />
         </div>
         <button type="submit">Add book</button>
+        <button type="button" onClick={handleRandomBook}>Add random</button>
       </form>
     </div>
   );

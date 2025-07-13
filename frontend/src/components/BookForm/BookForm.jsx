@@ -14,8 +14,7 @@ function BookForm() {
   function handleRandomBook() {
     const randomId = Math.floor(Math.random() * booksData.length)
     const randomBook = booksData[randomId]
-    const randomBookWithId = {...randomBook, id: nanoid()}
-
+    const randomBookWithId = {...randomBook, id: nanoid(), isFavorite: false}
     dispatch(addBook(randomBookWithId))
   }
 
@@ -26,6 +25,7 @@ function BookForm() {
         title,
         author,
         id: nanoid(),
+        isFavorite: false,
       }
 
       dispatch(addBook(book))

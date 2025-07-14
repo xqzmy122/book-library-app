@@ -1,13 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BsBookmarkStar, BsBookmarkStarFill } from "react-icons/bs";
 import { deleteBook, toggleFavorite } from "../../redux/books/actionCreators";
-import { selectFilterAuthor, selectFilterTitle} from "../../redux/slices/filterSlice";
+import { selectFilterAuthor, selectFilterTitle, selectFilterOnlyFavorites} from "../../redux/slices/filterSlice";
 import "./BookList.css";
 
 function BookList() {
   const books = useSelector((state) => state.books); // подписываемся на изменения books
   const titleFilter = useSelector(selectFilterTitle)
   const authorFilter = useSelector(selectFilterAuthor)
+  const onlyFavorites = useSelector(selectFilterOnlyFavorites)
   const dispatch = useDispatch();
 
   function onClickHandler(id) {
@@ -15,12 +16,15 @@ function BookList() {
   }
 
   function handleToggleFavorite(id) {
-    console.log(id);
     dispatch(toggleFavorite(id));
   }
 
   const filteredBooks = books.filter((book) => {
-    return (book.title.toLowerCase().includes(titleFilter.toLowerCase()) && book.author.toLowerCase().includes(authorFilter.toLowerCase()))
+    const matchesTitle = book.title.toLowerCase().includes(titleFilter.toLowerCase())
+    const matchesAuthor = book.author.toLowerCase().includes(authorFilter.toLowerCase())
+    const matchesFavorites = onlyFavorites ? book.isFavorite : true
+
+    return matchesTitle && matchesAuthor && matchesFavorites
   })
 
   return (

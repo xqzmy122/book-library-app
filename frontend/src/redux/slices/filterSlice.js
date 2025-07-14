@@ -1,7 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
-  title: ''
+  title: '',
+  author: '',
 }
 
 const filterSlice = createSlice({
@@ -16,6 +17,9 @@ const filterSlice = createSlice({
       // работает корректно благодаря библиотеке immer, которая 
       // формирует новое объект
      },
+     setAuthorFilter(state, action) {
+      state.author = action.payload
+     },
      resetFilter(state) {
       return initialState
      }
@@ -27,5 +31,6 @@ const filterSlice = createSlice({
 // был вызван, для того, чтобы передать payload необходимо передать в функцию аргументы
 
 export default filterSlice.reducer // содержит все функции для изменения состояния
-export const {setTitleFilter, resetFilter} = filterSlice.actions
+export const {setTitleFilter, setAuthorFilter, resetFilter} = filterSlice.actions
 export const selectFilterTitle = (state) => state.filter.title
+export const selectFilterAuthor = (state) => state.filter.author

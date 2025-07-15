@@ -24,7 +24,7 @@ const filterSlice = createSlice({
      toggleOnlyFavorites(state) {
       state.onlyFavorites = !state.onlyFavorites
      },
-     resetFilter(state) {
+     resetFilter() {
       return initialState
      }
   }

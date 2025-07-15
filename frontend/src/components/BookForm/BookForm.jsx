@@ -1,8 +1,7 @@
 import { useState } from "react";
 import "./BookForm.css";
 import { useDispatch } from "react-redux";
-import {nanoid} from 'nanoid'
-import { addBook } from "../../redux/books/actionCreators";
+import { addBook } from "../../redux/slices/bookSlice";
 import booksData from '../../data/books.json'
 import { createBookWithId } from "../../utils/createBookWithId";
 

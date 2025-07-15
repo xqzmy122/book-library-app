@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BsBookmarkStar, BsBookmarkStarFill } from "react-icons/bs";
-import { deleteBook, toggleFavorite } from "../../redux/books/actionCreators";
+import { deleteBook, toggleFavorite } from "../../redux/slices/bookSlice";
 import { selectFilterAuthor, selectFilterTitle, selectFilterOnlyFavorites} from "../../redux/slices/filterSlice";
 import "./BookList.css";
 
@@ -16,7 +16,23 @@ function BookList() {
   }
 
   function handleToggleFavorite(id) {
-    dispatch(toggleFavorite(id));
+    dispatch(toggleFavorite(id))
+  }
+
+  function highlightMatch(text, filter) {
+    if(!filter) text
+
+    const regex = new RegExp(`(${filter})`, 'gi')
+
+    return text.split(regex).map((substring, i) => {
+      if(substring.toLowerCase() === filter.toLowerCase()) {
+        return (
+          <span className="highlight" key={i}>{substring}</span>
+        )
+      }
+
+      return substring
+    })
   }
 
   const filteredBooks = books.filter((book) => {
@@ -38,7 +54,7 @@ function BookList() {
             return (
               <li key={book.id}>
                 <div className="book-info">
-                  {++i}. {book.title} by <strong>{book.author}</strong>
+                  {++i}. {highlightMatch(book.title, titleFilter)} by <strong>{highlightMatch(book.author, authorFilter)}</strong>
                 </div>
 
                 <div className="book-actions">

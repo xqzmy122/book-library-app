@@ -54,7 +54,7 @@ function BookList() {
             return (
               <li key={book.id}>
                 <div className="book-info">
-                  {++i}. {highlightMatch(book.title, titleFilter)} by <strong>{highlightMatch(book.author, authorFilter)}</strong>
+                  {++i}. {highlightMatch(book.title, titleFilter)} by <strong>{highlightMatch(book.author, authorFilter)}</strong> ({book.source})
                 </div>
 
                 <div className="book-actions">
